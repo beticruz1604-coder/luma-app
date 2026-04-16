@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#d4528a" />
+  <title>Nueve Lunas — Un espacio para tu embarazo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body data-baby-theme="neutral">
+  <div id="splashScreen" class="splash-screen" role="img" aria-label="Nueve Lunas">
+    <img class="splash-logo" src="{{ url_for('static', filename='img/splash-logo.png') }}" alt="" width="320" height="320" decoding="async" />
+  </div>
+  <a class="skip-link" href="#main">Ir al contenido</a>
+  <header class="app-header">
+    <div class="brand">
+      <div class="brand-top">
+        <span class="brand-moon" aria-hidden="true">☽</span>
+        <h1 class="app-name">Nueve Lunas</h1>
+      </div>
+      <div class="brand-sub">
+        <span class="brand-flower" aria-hidden="true">✿</span>
+        <div class="brand-sub-text">
+          <p class="brand-tagline-strong">Un espacio para tu embarazo</p>
+          <p class="tagline">Seguimiento, aprendizaje y apoyo</p>
+        </div>
+      </div>
+    </div>
+    <button type="button" class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mainNav">
+      <span class="nav-toggle-bar"></span>
+      <span class="nav-toggle-bar"></span>
+      <span class="nav-toggle-bar"></span>
+      <span class="sr-only">Menú</span>
+    </button>
+  </header>
+
+  <div id="appShell" class="app-shell">
+    <nav class="main-nav" id="mainNav" aria-label="Secciones">
+      <button type="button" class="nav-btn active" data-panel="inicio">Inicio</button>
+      <button type="button" class="nav-btn" data-panel="luma">Luma</button>
+      <button type="button" class="nav-btn nav-btn--bebe" data-panel="bebe" title="Personalizar bebé">Bebé</button>
+      <button type="button" class="nav-btn" data-panel="salud">Salud</button>
+      <button type="button" class="nav-btn" data-panel="recordatorios">Recordatorios</button>
+      <button type="button" class="nav-btn" data-panel="aprende">Aprende</button>
+      <button type="button" class="nav-btn" data-panel="bienestar">Bienestar</button>
+      <button type="button" class="nav-btn" data-panel="suscripcion">Suscripción</button>
+    </nav>
+
+    <main id="main" class="main-content">
+    <section id="panel-inicio" class="panel active" aria-labelledby="h-inicio">
+      <div class="hero-banner" id="heroBanner" aria-labelledby="heroHeading">
+        <div class="hero-visual" aria-hidden="true">
+          <div class="hero-orbit hero-orbit--1"></div>
+          <div class="hero-orbit hero-orbit--2"></div>
+          <div class="hero-womb">
+            <div class="hero-baby-glow"></div>
+            <div class="hero-baby-wrap" id="heroBabyWrap" style="--baby-scale: 0.22">
+              <div class="hero-baby" id="heroBaby">
+                <span class="hero-baby-face" id="heroBabyFace">👶</span>
+              </div>
+            </div>
+          </div>
+          <div class="hero-fruit-float" id="heroFruitFloat" title="Comparación orientativa">🫐</div>
+        </div>
+        <p class="hero-legend" id="heroLegend">Vista ilustrativa: el tamaño crece según la semana (referencia orientativa).</p>
+        <h2 class="sr-only" id="heroHeading">Cómo crece tu bebé esta semana</h2>
+        <p class="hero-banner-text" id="heroBannerText">Cada semana es un paso lleno de vida</p>
+      </div>
+
+      <div class="card countdown-card" id="countdownCard">
+        <h3>Cuenta atrás al encuentro</h3>
+        <p class="countdown-big" id="countdownBig">—</p>
+        <p class="countdown-sub hint" id="countdownSub">Indica tu FUM para estimar la fecha probable de parto (40 semanas).</p>
+      </div>
+
+      <div class="card daily-msg-card">
+        <h3>Mensaje de hoy</h3>
+        <p class="daily-quote" id="mensajeDiario">—</p>
+        <p class="daily-etapa" id="mensajeEtapa">—</p>
+        <p class="daily-extra" id="consejoExtra" hidden></p>
+        <button type="button" class="btn secondary btn-small" id="btnOtroConsejo">Otro consejo al azar</button>
+      </div>
+
+      <h2 id="h-inicio" class="panel-title panel-title--featured">Seguimiento del embarazo</h2>
+      <div class="card profile-card">
+        <h3>Tu perfil</h3>
+        <label class="field">
+          <span>Tu nombre</span>
+          <input type="text" id="nombreMadre" maxlength="120" required autocomplete="name" placeholder="Ej. María" />
+        </label>
+        <label class="field">
+          <span>Fecha de última menstruación (FUM)</span>
+          <input type="date" id="fechaFum" />
+        </label>
+        <p class="hint">La semana gestacional se calcula a partir de la FUM. Tu médico puede ajustar fechas con ecografías. Para nombre del bebé y colores (niña/niño) usa la pestaña <strong>Bebé</strong>.</p>
+        <button type="button" class="btn primary" id="btnGuardarPerfil">Guardar perfil</button>
+        <p id="perfilMsg" class="form-msg" role="status"></p>
+      </div>
+      <div class="card week-highlight" id="weekBox">
+        <p class="week-label">Semana gestacional (aprox.)</p>
+        <p class="week-number" id="semanaNum">—</p>
+        <p class="week-sub" id="semanaSub"></p>
+      </div>
+      <div class="card baby-growth-card" id="babyGrowthCard">
+        <div class="baby-growth-header">
+          <span class="baby-growth-emoji" id="babyGrowthEmoji" aria-hidden="true">🤰</span>
+          <div>
+            <h3>Crecimiento del bebé</h3>
+            <p class="baby-growth-lead" id="babyGrowthLead">Indica tu FUM para ver tamaño aproximado y comparación divertida.</p>
+          </div>
+        </div>
+        <ul class="growth-stats" id="growthStats" hidden>
+          <li><strong>Tamaño aprox.</strong> <span id="growthTamano">—</span></li>
+          <li><strong>Peso aprox.</strong> <span id="growthPeso">—</span></li>
+          <li><strong>Como una…</strong> <span id="growthFruta">—</span></li>
+        </ul>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>Desarrollo del bebé</h3>
+          <p id="textoBebe" class="prose">Indica tu FUM para ver información personalizada.</p>
+        </div>
+        <div class="card">
+          <h3>Cambios en tu cuerpo</h3>
+          <p id="textoMadre" class="prose">—</p>
+        </div>
+      </div>
+      <p class="disclaimer">La información es orientativa y no reemplaza la consulta médica.</p>
+    </section>
+
+    <section id="panel-bebe" class="panel" aria-labelledby="h-bebe" hidden>
+      <h2 id="h-bebe" class="panel-title panel-title--featured">Tu bebé — personalizar</h2>
+      <div class="card">
+        <h3>Nombre y sexo</h3>
+        <p class="bebe-name-lead">Cuéntanos qué nombre tienes pensado para tu bebé.</p>
+        <label class="field">
+          <span>Nombre del bebé</span>
+          <input type="text" id="nombreBebe" maxlength="120" placeholder="Ej. Lucía, Mateo…" autocomplete="off" />
+        </label>
+        <label class="field">
+          <span>Sexo (según lo que sepáis)</span>
+          <select id="sexoBebe">
+            <option value="desconocido">Aún no sabemos / prefiero neutro</option>
+            <option value="nina">Niña — tema rosa</option>
+            <option value="nino">Niño — tema azul</option>
+          </select>
+        </label>
+        <button type="button" class="btn primary" id="btnGuardarBebe">Guardar datos del bebé</button>
+        <p id="bebeMsg" class="form-msg" role="status"></p>
+      </div>
+    </section>
+
+    <section id="panel-luma" class="panel" aria-labelledby="h-luma" hidden>
+      <h2 id="h-luma" class="panel-title">Luma — asistente</h2>
+      <div class="card luma-card">
+        <div class="luma-avatar" aria-hidden="true">✦</div>
+        <p class="luma-intro">Hola, soy <strong>Luma</strong>, tu compañera para este embarazo. Cuéntame con tus palabras qué te pasa o qué te preocupa; intentaré responder <strong>a eso concreto</strong>, con orientación clara y cercana. No sustituyo al médico ni prescribo medicamentos; ante urgencias, llama a tu centro de salud.</p>
+        <div class="chat-log" id="chatLog" aria-live="polite"></div>
+        <form class="chat-form" id="chatForm">
+          <label class="sr-only" for="chatInput">Escribe tu mensaje</label>
+          <input type="text" id="chatInput" autocomplete="off" placeholder="" />
+          <button type="submit" class="btn primary">Enviar</button>
+        </form>
+      </div>
+    </section>
+
+    <section id="panel-salud" class="panel" aria-labelledby="h-salud" hidden>
+      <h2 id="h-salud" class="panel-title">Control de salud</h2>
+      <div class="grid-2">
+        <div class="card">
+          <h3>Peso</h3>
+          <form id="formPeso" class="stack-form">
+            <label class="field"><span>Fecha</span><input type="date" id="pesoFecha" required /></label>
+            <label class="field"><span>Peso (kg)</span><input type="number" step="0.1" min="30" max="200" id="pesoKg" required /></label>
+            <button type="submit" class="btn primary">Registrar</button>
+          </form>
+          <ul class="data-list" id="listaPesos"></ul>
+        </div>
+        <div class="card">
+          <h3>Presión arterial</h3>
+          <form id="formPresion" class="stack-form">
+            <label class="field"><span>Fecha</span><input type="date" id="paFecha" required /></label>
+            <div class="row-2">
+              <label class="field"><span>Sistólica</span><input type="number" min="60" max="250" id="paSis" required /></label>
+              <label class="field"><span>Diastólica</span><input type="number" min="40" max="150" id="paDia" required /></label>
+            </div>
+            <button type="submit" class="btn primary">Registrar</button>
+          </form>
+          <ul class="data-list" id="listaPresion"></ul>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Citas médicas</h3>
+        <form id="formCita" class="stack-form">
+          <label class="field"><span>Fecha y hora</span><input type="datetime-local" id="citaFechaHora" required /></label>
+          <label class="field"><span>Título</span><input type="text" id="citaTitulo" placeholder="Control / ecografía" required /></label>
+          <label class="field"><span>Notas</span><textarea id="citaNotas" rows="2"></textarea></label>
+          <button type="submit" class="btn primary">Añadir cita</button>
+        </form>
+        <ul class="data-list" id="listaCitas"></ul>
+      </div>
+      <div class="card">
+        <h3>Medicamentos</h3>
+        <form id="formMed" class="stack-form">
+          <label class="field"><span>Nombre</span><input type="text" id="medNombre" required /></label>
+          <label class="field"><span>Frecuencia</span><input type="text" id="medFreq" placeholder="Ej. 1 comprimido en ayunas" /></label>
+          <label class="field"><span>Notas</span><textarea id="medNotas" rows="2"></textarea></label>
+          <button type="submit" class="btn primary">Añadir</button>
+        </form>
+        <ul class="data-list" id="listaMeds"></ul>
+      </div>
+    </section>
+
+    <section id="panel-recordatorios" class="panel" aria-labelledby="h-rec" hidden>
+      <h2 id="h-rec" class="panel-title">Recordatorios</h2>
+      <div class="card">
+        <form id="formRec" class="stack-form">
+          <label class="field"><span>Fecha y hora</span><input type="datetime-local" id="recFechaHora" required /></label>
+          <label class="field"><span>Título</span><input type="text" id="recTitulo" required /></label>
+          <label class="field">
+            <span>Categoría</span>
+            <select id="recCat">
+              <option value="cita">Cita médica</option>
+              <option value="vitamina">Vitamina / suplemento</option>
+              <option value="estudio">Estudio / análisis</option>
+              <option value="otro">Otro</option>
+            </select>
+          </label>
+          <button type="submit" class="btn primary">Crear recordatorio</button>
+        </form>
+        <ul class="reminder-list" id="listaRec"></ul>
+      </div>
+    </section>
+
+    <section id="panel-aprende" class="panel" aria-labelledby="h-aprende" hidden>
+      <h2 id="h-aprende" class="panel-title">Información educativa</h2>
+      <p class="hint edu-intro">Desliza en móvil para ver todos los temas. La información es orientativa.</p>
+      <div class="tabs-mini tabs-mini--scroll" role="tablist" aria-label="Temas educativos">
+        <button type="button" class="tab-mini active" role="tab" aria-selected="true" data-edu="alimentacion">Alimentación</button>
+        <button type="button" class="tab-mini" role="tab" aria-selected="false" data-edu="ejercicio">Ejercicio</button>
+        <button type="button" class="tab-mini" role="tab" aria-selected="false" data-edu="alertas">Alertas</button>
+        <button type="button" class="tab-mini" role="tab" aria-selected="false" data-edu="sueno">Sueño</button>
+        <button type="button" class="tab-mini" role="tab" aria-selected="false" data-edu="hidratacion">Agua</button>
+        <button type="button" class="tab-mini" role="tab" aria-selected="false" data-edu="dental">Dental</button>
+        <button type="button" class="tab-mini" role="tab" aria-selected="false" data-edu="piel_sol">Piel / sol</button>
+        <button type="button" class="tab-mini" role="tab" aria-selected="false" data-edu="viajes">Viajes</button>
+        <button type="button" class="tab-mini" role="tab" aria-selected="false" data-edu="lactancia_previa">Lactancia</button>
+        <button type="button" class="tab-mini" role="tab" aria-selected="false" data-edu="postparto">Postparto</button>
+        <button type="button" class="tab-mini" role="tab" aria-selected="false" data-edu="vacunas">Vacunas</button>
+        <button type="button" class="tab-mini" role="tab" aria-selected="false" data-edu="pareja_familia">Pareja / familia</button>
+      </div>
+      <div class="card" id="eduCard">
+        <h3 id="eduTitulo">—</h3>
+        <ul id="eduLista" class="bullet-list"></ul>
+      </div>
+    </section>
+
+    <section id="panel-bienestar" class="panel" aria-labelledby="h-bien" hidden>
+      <h2 id="h-bien" class="panel-title">Apoyo emocional</h2>
+      <div class="card well-card">
+        <p class="well-quote" id="mensajePositivo">—</p>
+        <p class="well-tip"><strong>Contra el estrés:</strong> <span id="consejoEstres">—</span></p>
+        <button type="button" class="btn secondary" id="btnNuevoMensaje">Otro mensaje</button>
+      </div>
+    </section>
+
+    <section id="panel-suscripcion" class="panel" aria-labelledby="h-sub" hidden>
+      <h2 id="h-sub" class="panel-title">Tu suscripción</h2>
+      <div class="card">
+        <h3>Estado actual</h3>
+        <p id="subEstadoTexto" class="prose">—</p>
+        <p class="hint" id="subEstadoExtra"></p>
+      </div>
+      <div class="card sub-card-alta" id="subCardAlta">
+        <h3 id="subActivarTitle" class="paywall-title">Suscripción Nueve Lunas</h3>
+        <ul class="paywall-benefits">
+          <li>Seguimiento semanal y cuenta atrás al parto</li>
+          <li>Asistente Luma y mensajes según tu etapa</li>
+          <li>Registro de peso, presión, citas y medicamentos</li>
+          <li>Biblioteca “Aprende” y apoyo emocional</li>
+        </ul>
+        <div class="price-showcase" aria-hidden="false">
+          <p class="price-showcase-title">Planes en pesos mexicanos</p>
+          <div class="price-grid">
+            <div class="price-card">
+              <span class="price-label">Mensual</span>
+              <span class="price-amount"><span class="price-currency">$</span>99</span>
+              <span class="price-unit">MXN / mes</span>
+            </div>
+            <div class="price-card price-card--hot">
+              <span class="price-badge">Ahorras</span>
+              <span class="price-label">Trimestral</span>
+              <span class="price-amount"><span class="price-currency">$</span>249</span>
+              <span class="price-unit">MXN · 3 meses</span>
+            </div>
+            <div class="price-card">
+              <span class="price-label">Semestral</span>
+              <span class="price-amount"><span class="price-currency">$</span>449</span>
+              <span class="price-unit">MXN · 6 meses</span>
+            </div>
+            <div class="price-card price-card--best">
+              <span class="price-badge price-badge--best">Todo el embarazo</span>
+              <span class="price-label">9 meses</span>
+              <span class="price-amount"><span class="price-currency">$</span>599</span>
+              <span class="price-unit">MXN · acceso largo</span>
+            </div>
+          </div>
+        </div>
+        <form id="formSuscripcion" class="stack-form paywall-form">
+          <label class="field">
+            <span>Elige tu plan</span>
+            <select id="subPlan" required>
+              <option value="mensual">Mensual — $99 MXN</option>
+              <option value="trimestral">Trimestral — $249 MXN (ahorro)</option>
+              <option value="semestral">Semestral — $449 MXN</option>
+              <option value="embarazo_completo">Embarazo completo (9 meses) — $599 MXN</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Titular de la tarjeta</span>
+            <input type="text" id="subTitular" required autocomplete="name" placeholder="Nombre como figura en la tarjeta" maxlength="120" />
+          </label>
+          <label class="field">
+            <span>Últimos 4 dígitos de la tarjeta</span>
+            <input type="text" id="subDigitos" required inputmode="numeric" pattern="[0-9]{4}" maxlength="4" placeholder="1234" />
+          </label>
+          <label class="field">
+            <span>Correo (opcional, para recibos reales)</span>
+            <input type="email" id="subEmail" autocomplete="email" placeholder="tu@correo.com" />
+          </label>
+          <p class="hint paywall-legal">Al confirmar aceptas las condiciones de uso del servicio.</p>
+          <button type="submit" class="btn primary btn-block">Confirmar pago y entrar</button>
+        </form>
+        <button type="button" class="btn secondary btn-block" id="btnSubIrPerfil">Volver al perfil</button>
+        <p id="subAltaMsg" class="form-msg" role="status"></p>
+      </div>
+      <div class="card" id="subCardRenovar" hidden>
+        <h3>Renovar o cambiar plan</h3>
+        <p class="hint">Mismo flujo que al darte de alta.</p>
+        <form id="formRenovarSub" class="stack-form">
+          <label class="field">
+            <span>Plan</span>
+            <select id="subPlanRenovar" required>
+              <option value="mensual">Mensual — $99 MXN (30 días)</option>
+              <option value="trimestral">Trimestral — $249 MXN (90 días)</option>
+              <option value="semestral">Semestral — $449 MXN (180 días)</option>
+              <option value="embarazo_completo">Embarazo completo — $599 MXN (9 meses)</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Titular</span>
+            <input type="text" id="subTitularRenovar" required maxlength="120" />
+          </label>
+          <label class="field">
+            <span>Últimos 4 dígitos</span>
+            <input type="text" id="subDigitosRenovar" required inputmode="numeric" pattern="[0-9]{4}" maxlength="4" />
+          </label>
+          <button type="submit" class="btn primary">Confirmar pago y actualizar</button>
+        </form>
+        <p id="subRenovarMsg" class="form-msg" role="status"></p>
+      </div>
+    </section>
+    </main>
+  </div>
+
+  <footer class="app-footer" id="siteFooter">
+    <p><strong>Nueve Lunas</strong> · Un espacio para tu embarazo · Sistema de apoyo al conocimiento (KWS) y gestión de información personal (MIS)</p>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/app.js') }}" defer></script>
+</body>
+</html>
